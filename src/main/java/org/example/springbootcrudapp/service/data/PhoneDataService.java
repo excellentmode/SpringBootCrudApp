@@ -5,7 +5,6 @@ import org.example.springbootcrudapp.entity.PhoneData;
 import org.example.springbootcrudapp.mapper.PhoneDataMapper;
 import org.example.springbootcrudapp.model.PhoneDataModel;
 import org.example.springbootcrudapp.repository.PhoneDataRepository;
-import org.example.springbootcrudapp.service.cache.UserCacheService;
 import org.springframework.stereotype.Service;
 
 @Service

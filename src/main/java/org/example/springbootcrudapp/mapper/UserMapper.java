@@ -15,7 +15,5 @@ public abstract class UserMapper {
     @Mapping(target = "password", ignore = true)
     public abstract UserModel toUserModel(UserData entity);
 
-    public abstract UserData toUserEntity(UserModel model);
-
     public abstract UserDto toUserDtos(UserModel model);
 }
