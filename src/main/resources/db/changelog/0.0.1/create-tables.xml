@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_data">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(500)"/>
+            <column name="date_of_birth" type="DATE"/>
+            <column name="password" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="account_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="account_data">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="balance" type="DECIMAL"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_account_user"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="account_data"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_account_user"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="4" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="email_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="email_data">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_email_user"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="email_data"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_email_user"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="6" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="phone_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="phone_data">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(13)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="7" author="excellentmode">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_phone_user"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="phone_data"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_phone_user"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

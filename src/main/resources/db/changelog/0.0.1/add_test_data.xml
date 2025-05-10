@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!--    Тестовый пароль для юзера - пишем в бд сразу хэш.
+        Получили с помощью BCryptPasswordEncoder.
+        Password = password1231231235245
+    -->
+
+    <changeSet id="1" author="excellentmode">
+        <addColumn tableName="account_data">
+            <column name="initial_balance" type="DECIMAL"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2" author="excellentmode">
+        <insert tableName="user_data">
+            <column name="name" value="Иван Иванов"/>
+            <column name="date_of_birth" value="1990-01-01"/>
+            <column name="password" value="$2a$12$8WlcciZZRD6SUfs.X4FxXuRhaPg6IACJ32BnG7lleStd7Qm/hfmD2"/>
+        </insert>
+        <insert tableName="user_data">
+            <column name="name" value="Анна Смирнова"/>
+            <column name="date_of_birth" value="1991-02-02"/>
+            <column name="password" value="$2a$12$8WlcciZZRD6SUfs.X4FxXuRhaPg6IACJ32BnG7lleStd7Qm/hfmD2"/>
+        </insert>
+        <insert tableName="user_data">
+            <column name="name" value="Пётр Сидоров"/>
+            <column name="date_of_birth" value="1992-03-03"/>
+            <column name="password" value="$2a$12$8WlcciZZRD6SUfs.X4FxXuRhaPg6IACJ32BnG7lleStd7Qm/hfmD2"/>
+        </insert>
+        <insert tableName="user_data">
+            <column name="name" value="Мария Кузнецова"/>
+            <column name="date_of_birth" value="1993-04-04"/>
+            <column name="password" value="$2a$12$8WlcciZZRD6SUfs.X4FxXuRhaPg6IACJ32BnG7lleStd7Qm/hfmD2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3" author="excellentmode">
+        <insert tableName="account_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Иван Иванов')"/>
+            <column name="balance" valueNumeric="1.00"/>
+            <column name="initial_balance" valueNumeric="1.00"/>
+        </insert>
+        <insert tableName="account_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Анна Смирнова')"/>
+            <column name="balance" valueNumeric="2.00"/>
+            <column name="initial_balance" valueNumeric="2.00"/>
+        </insert>
+        <insert tableName="account_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Пётр Сидоров')"/>
+            <column name="balance" valueNumeric="3.00"/>
+            <column name="initial_balance" valueNumeric="3.00"/>
+        </insert>
+        <insert tableName="account_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Мария Кузнецова')"/>
+            <column name="balance" valueNumeric="4.00"/>
+            <column name="initial_balance" valueNumeric="4.00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="4" author="excellentmode">
+        <insert tableName="email_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Иван Иванов')"/>
+            <column name="email" value="ivan@example.com"/>
+        </insert>
+        <insert tableName="email_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Анна Смирнова')"/>
+            <column name="email" value="anna@example.com"/>
+        </insert>
+        <insert tableName="email_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Пётр Сидоров')"/>
+            <column name="email" value="petr@example.com"/>
+        </insert>
+        <insert tableName="email_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Мария Кузнецова')"/>
+            <column name="email" value="maria@example.com"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="excellentmode">
+        <insert tableName="phone_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Иван Иванов')"/>
+            <column name="phone" value="79000000001"/>
+        </insert>
+        <insert tableName="phone_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Анна Смирнова')"/>
+            <column name="phone" value="79000000002"/>
+        </insert>
+        <insert tableName="phone_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Пётр Сидоров')"/>
+            <column name="phone" value="79000000003"/>
+        </insert>
+        <insert tableName="phone_data">
+            <column name="user_id" valueComputed="(SELECT id FROM user_data WHERE name = 'Мария Кузнецова')"/>
+            <column name="phone" value="79000000004"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
